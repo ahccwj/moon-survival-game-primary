@@ -1133,6 +1133,8 @@
         await showEventCard(currentIncidentIndex + 1);
       } else if (val === 'results') {
         await showResults();
+      } else if (val === 'show_nasa') {
+        await showNASAAnswer();
       } else if (val === 'restart') {
         location.reload();
       } else if (val.startsWith('explain_')) {
@@ -1181,13 +1183,77 @@
       table += '</table>';
       await botSay(table, true, 400);
 
-      // 總結每件物品為什麼這樣排
-      await botSay("**📚 NASA 排名解釋：**\n\n你想知道哪件物品為什麼這樣排？點擊下面的按鈕！");
+      // 顯示 NASA 標準答案按鈕
+      await botSay("**📚 想知道 NASA 專家的標準排名嗎？**");
 
       setReplies([
-        { text: "💨 氧氣為什麼第1?", value: "explain_1" },
-        { text: "🧭 指南針為什麼沒用?", value: "explain_14" },
-        { text: "🔥 火柴為什麼最後?", value: "explain_15" },
+        { text: "🚀 查看 NASA 標準答案！", value: "show_nasa", primary: true },
+        { text: "🔄 再玩一次！", value: "restart" }
+      ]);
+    }
+
+    async function showNASAAnswer() {
+      await botSay("🌟 **NASA 專家標準排名**\n\n以下是 NASA 太空專家根據月球生存需求而制定的官方排名：");
+
+      // 獲取排序後的物品（只取前15個，排除手電筒）
+      const sortedItems = [...items].filter(i => i.nasaRank <= 15).sort((a, b) => a.nasaRank - b.nasaRank);
+
+      let nasaTable = `<div style="background:linear-gradient(145deg, rgba(168,85,247,0.2), rgba(78,205,196,0.15)); border:3px solid var(--cosmic-purple); border-radius:16px; padding:16px; margin:10px 0;">
+        <div style="text-align:center; margin-bottom:12px;">
+          <span style="font-size:1.5rem;">🏛️</span>
+          <strong style="color:var(--moon-yellow); font-size:1.1rem;"> NASA 官方標準答案</strong>
+        </div>
+        <table class="results-table" style="margin:0;">
+          <tr><th style="width:15%">排名</th><th>物品</th><th style="width:55%">原因</th></tr>`;
+
+      sortedItems.forEach(item => {
+        let rankStyle = '';
+        if (item.nasaRank <= 3) {
+          rankStyle = 'background:linear-gradient(135deg,#ffd700,#ffb700);color:#333;font-weight:900;';
+        } else if (item.nasaRank <= 7) {
+          rankStyle = 'background:linear-gradient(135deg,var(--alien-green),var(--star-blue));color:#333;font-weight:700;';
+        } else if (item.nasaRank <= 10) {
+          rankStyle = 'background:rgba(255,255,255,0.2);';
+        } else {
+          rankStyle = 'background:rgba(255,107,107,0.2);';
+        }
+
+        nasaTable += `<tr>
+          <td style="${rankStyle};border-radius:8px;"><strong>#${item.nasaRank}</strong></td>
+          <td><span style="font-size:1.2rem;">${item.emoji}</span> ${item.name}</td>
+          <td style="text-align:left;font-size:0.75rem;line-height:1.4;">${item.reason}</td>
+        </tr>`;
+      });
+
+      nasaTable += `</table></div>`;
+      await botSay(nasaTable, true, 600);
+
+      // 總結重點
+      await botSay(`**🎓 學習重點總結：**
+
+**🥇 最重要（第1-5名）：**
+- **氧氣** - 沒有空氣，幾分鐘就會死亡！
+- **食水** - 人體需要水來維持生命
+- **星際地圖** - 月球沒有GPS，靠星星辨認方向
+- **濃縮食物** - 步行300公里需要能量
+- **收音機** - 可以與基地聯絡求救
+
+**🥈 有用（第6-10名）：**
+- 尼龍繩、急救箱、降落傘布、救生艇、信號彈
+
+**🥉 不太有用（第11-15名）：**
+- **滅火筒** - 只能當推進器用
+- **脫水奶** - 沒水就沒用
+- **太陽能暖爐** - 太空衣已保暖
+- **指南針** - 月球沒磁場，無法使用！
+- **火柴** - 月球沒氧氣，點不著！`);
+
+      await new Promise(r => setTimeout(r, 500));
+
+      setReplies([
+        { text: "💨 了解更多：氧氣", value: "explain_1" },
+        { text: "🧭 了解更多：指南針", value: "explain_14" },
+        { text: "🔥 了解更多：火柴", value: "explain_15" },
         { text: "🔄 再玩一次！", value: "restart", primary: true }
       ]);
     }
