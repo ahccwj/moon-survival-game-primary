@@ -686,38 +686,52 @@
 
   <div class="container">
     <header>
-      <h1>🌙 月球生存大挑戰</h1>
-      <p class="subtitle">看看你是否懂得在月球上生存！</p>
+      <h1 id="main-title">🌙 Moon Survival Challenge</h1>
+      <p class="subtitle" id="main-subtitle">Choose your language / 選擇語言</p>
     </header>
 
-    <div id="intro-screen" class="screen active">
-      <div class="story-box">
-        <h2>👨‍🚀 你的太空冒險！</h2>
-        <p>
-          大事不好！你的太空船在月球墜毀了！🚀💥<br><br>
-          你需要步行 <strong>300 公里</strong>才能到達月球基地！<br><br>
-          你找到了 <strong>15 件物品</strong>，必須決定哪些最重要！<br><br>
-          之後會有 <strong>5 張事件卡</strong>，幫助你思考月球生存的問題！🌟
+    <!-- Language Selection Screen -->
+    <div id="lang-screen" class="screen active">
+      <div class="story-box" style="text-align: center;">
+        <h2>🌍 Select Language / 選擇語言</h2>
+        <p style="margin: 20px 0;">
+          Choose your preferred language to begin the Moon Survival Challenge!<br><br>
+          選擇你的語言開始月球生存挑戰！
         </p>
+        <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 25px;">
+          <button class="btn btn-primary" onclick="selectLanguage('en')" style="font-size: 1.1rem;">
+            🇬🇧 English
+          </button>
+          <button class="btn btn-secondary" onclick="selectLanguage('zh')" style="font-size: 1.1rem;">
+            🇭🇰 中文（繁體）
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="intro-screen" class="screen">
+      <div class="story-box">
+        <h2 id="story-title">👨‍🚀 Your Space Adventure!</h2>
+        <p id="story-content"></p>
       </div>
 
       <div class="instructions">
-        <p>👆 <strong>拖拉物品排列順序！</strong></p>
-        <p>🏆 #1 = 最重要 → #15 = 最不重要</p>
+        <p id="intro-instructions"></p>
+        <p id="intro-instructions-sub"></p>
       </div>
 
       <div class="center-btn">
-        <button class="btn btn-primary" onclick="startRanking()">🚀 開始挑戰！</button>
+        <button class="btn btn-primary" onclick="startRanking()" id="start-btn">🚀 Start Challenge!</button>
       </div>
     </div>
 
     <div id="ranking-screen" class="screen">
       <div class="instructions">
-        <p>👆 按住並拖拉物品來排列順序！ #1 = 最重要</p>
+        <p id="drag-instruction"></p>
       </div>
       <div class="items-list" id="items-list"></div>
       <div class="center-btn">
-        <button class="btn btn-secondary" onclick="submitRankings()">✅ 交卷開始冒險！</button>
+        <button class="btn btn-secondary" onclick="submitRankings()" id="submit-btn">✅ Submit & Start Adventure!</button>
       </div>
     </div>
 
@@ -735,103 +749,391 @@
   </div>
 
   <script>
-    const items = [
-      { id: 1, emoji: "💨", name: "氧氣罐", nasaRank: 1, reason: "月球沒有空氣，這是生存必需品！沒有氧氣幾分鐘就會死亡！" },
-      { id: 2, emoji: "💧", name: "食水", nasaRank: 2, reason: "人體需要水來維持生命，月球沒有水源，所以必須攜帶食水！" },
-      { id: 3, emoji: "🗺️", name: "星際地圖", nasaRank: 3, reason: "月球沒有 GPS，需要靠星星來辨認方向！地圖可以幫助你找到正確路線！" },
-      { id: 4, emoji: "🍫", name: "濃縮食物", nasaRank: 4, reason: "步行 300 公里需要大量能量，濃縮食物體積小但營養豐富！" },
-      { id: 5, emoji: "📻", name: "太陽能收音機", nasaRank: 5, reason: "可以與月球基地聯絡，請求救援！" },
-      { id: 6, emoji: "🪢", name: "尼龍繩", nasaRank: 6, reason: "可以綁住隊友一起行走，通過危險地帶時互相幫助！" },
-      { id: 7, emoji: "🩹", name: "急救箱", nasaRank: 7, reason: "受傷時可以包紮傷口，還有修補太空衣的材料！" },
-      { id: 8, emoji: "🪂", name: "降落傘布", nasaRank: 8, reason: "可以遮擋太陽、阻擋灰塵、搬運物品，用途廣泛！" },
-      { id: 9, emoji: "🛟", name: "救生艇", nasaRank: 9, reason: "可以用來裝載物品、遮蓋物資，甚至可以反射陽光求救！" },
-      { id: 10, emoji: "📡", name: "信號彈", nasaRank: 10, reason: "接近基地時可以發射信號，讓人知道你的位置！" },
-      { id: 11, emoji: "🧯", name: "滅火筒", nasaRank: 11, reason: "可以當作噴射推進器使用！噴出的氣體可以推動你前進！" },
-      { id: 12, emoji: "🥛", name: "脫水奶", nasaRank: 12, reason: "有營養但需要加水，沒有水就沒什麼用處！" },
-      { id: 13, emoji: "🔆", name: "太陽能暖爐", nasaRank: 13, reason: "太空衣已經有保暖功能，而且在陰影區沒有太陽能！" },
-      { id: 14, emoji: "🧭", name: "指南針", nasaRank: 14, reason: "月球沒有磁場，指南針完全無法使用！" },
-      { id: 15, emoji: "🔥", name: "火柴", nasaRank: 15, reason: "月球沒有氧氣，火柴無論如何都點不著！" },
-      { id: 16, emoji: "🔦", name: "手電筒", nasaRank: 16, reason: "月球陰影區可以使用，但電池在極端溫度下可能失效！" }
-    ];
+    // Language system
+    let currentLang = 'zh';
 
-    // 事件卡 - 會隨機排序
-    const eventCards = [
-      {
-        id: 1,
-        title: "🧭 我們迷路了！",
-        situation: "你的小隊需要在月球表面找出前往母船的正確方向，但指南針完全無法運作。",
-        event: "指南針的指針不停轉動，完全無法指出方向！",
-        questions: [
-          "如果在地球的森林迷路，你會選哪一項工具？為甚麼？",
-          "為甚麼同一件工具在不同地方，效果會不同？",
-          "若天色昏暗，星圖不清楚，你還可以怎樣協助隊伍？"
-        ],
-        itemQuestion: "你認為應該使用哪一項工具來辨別方向？",
-        correctItem: "星際地圖",
-        wrongItems: ["指南針", "手電筒"],
-        explanation: "🗺️ **正確答案：星圖（星際地圖）！**\n\n月球上沒有磁場，指南針不能使用；星體位置固定，有助辨別方向。\n\n這就是為什麼 NASA 把星際地圖排在第 3 位！在月球上，我們需要靠觀察星星的位置來找到正確方向。"
+    const translations = {
+      zh: {
+        title: "🌙 月球生存大挑戰",
+        subtitle: "看看你是否懂得在月球上生存！",
+        storyTitle: "👨‍🚀 你的太空冒險！",
+        storyContent: `大事不好！你的太空船在月球墜毀了！🚀💥<br><br>
+          你需要步行 <strong>300 公里</strong>才能到達月球基地！<br><br>
+          你找到了 <strong>15 件物品</strong>，必須決定哪些最重要！<br><br>
+          之後會有 <strong>5 張事件卡</strong>，幫助你思考月球生存的問題！🌟`,
+        instructions: "👆 <strong>拖拉物品排列順序！</strong>",
+        instructionsSub: "🏆 #1 = 最重要 → #15 = 最不重要",
+        startBtn: "🚀 開始挑戰！",
+        dragInstruction: "👆 按住並拖拉物品來排列順序！ #1 = 最重要",
+        submitBtn: "✅ 交卷開始冒險！",
+        homeBtn: "🏠 返回主頁",
+        footer1: "Created by <strong>Cheung Chung Wah Joyce</strong>",
+        footer2: "MEDD8869 Moon Survival Game (Primary Edition)",
+        rankingReceived: "🎉 **已收到你的排名！**\n\n現在開始月球冒險之旅... 你會遇到 5 張事件卡！\n\n每張卡都有思考問題，幫助你更深入了解月球生存的挑戰！🚀",
+        eventCardLabel: "🟦 事件卡",
+        situationLabel: "📍 情境說明",
+        eventLabel: "⚡ 突發事件",
+        questionsLabel: "🤔 思考問題",
+        correctFeedback: "✅ 答對了！太棒了！",
+        wrongFeedback: "❌ 不太對喔！",
+        nextCardBtn: "➡️ 下一張事件卡！",
+        viewResultsBtn: "🏆 查看最終結果！",
+        congratsMsg: "🎊 **恭喜你完成了所有事件卡！**\n\n現在來看看你的排名成績...",
+        scoreLabel: "你的分數",
+        scoreTip: "（分數越低越好！0分 = 完美！）",
+        badgeExpert: "🏆 太空專家！",
+        badgeGood: "🌟 優秀太空人！",
+        badgeNovice: "🚀 太空新手！",
+        tableItem: "物品",
+        tableYou: "你",
+        tableNasa: "NASA",
+        tableDiff: "差",
+        nasaQuestion: "**📚 想知道 NASA 專家的標準排名嗎？**",
+        viewNasaBtn: "🚀 查看 NASA 標準答案！",
+        restartBtn: "🔄 再玩一次！",
+        nasaTitle: "🌟 **NASA 專家標準排名**\n\n以下是 NASA 太空專家根據月球生存需求而制定的官方排名：",
+        nasaOfficialTitle: "🏛️ NASA 官方標準答案",
+        tableRank: "排名",
+        tableReason: "原因",
+        learningSummary: `**🎓 學習重點總結：**
+
+**🥇 最重要（第1-5名）：**
+- **氧氣瓶** - 沒有空氣，幾分鐘就會死亡！
+- **飲用水** - 人體需要水來維持生命
+- **星圖** - 月球沒有GPS，靠星星辨認方向
+- **太空食物包** - 步行300公里需要能量
+- **太陽能收音機** - 可以與基地聯絡求救
+
+**🥈 有用（第6-10名）：**
+- 攀爬繩、急救箱、反光絲綢布、充氣帳篷、信號鏡
+
+**🥉 不太有用（第11-15名）：**
+- **二氧化碳滅火器** - 只能當推進器用
+- **脫水奶粉** - 沒水就沒用
+- **電池發熱包** - 太空衣已保暖
+- **高倍率雙筒望遠鏡** - 只能看遠處，不能導航
+- **放大鏡** - 月球沒氧氣，無法生火！`,
+        learnMore: "了解更多：",
+        senderBot: "🤖 太空博士",
+        senderIncident: "⚠️ 突發事件",
+        senderLesson: "📚 學習重點"
       },
-      {
-        id: 2,
-        title: "😰 隊員感到不適",
-        situation: "有隊員出現呼吸急促及疲倦的情況，行動開始變慢。",
-        event: "隊員的臉色變得蒼白，呼吸越來越困難！",
-        questions: [
-          "食物、水、氧氣之中，哪一樣最先需要？請排序並解釋。",
-          "為甚麼有些資源是「必需品」，而不是「有用就好」？",
-          "如果氧氣有限，你會如何作出公平分配？"
-        ],
-        itemQuestion: "你認為此時最需要使用哪一項工具？",
-        correctItem: "氧氣罐",
-        wrongItems: ["濃縮食物", "食水"],
-        explanation: "💨 **正確答案：氧氣瓶（氧氣罐）！**\n\n沒有氧氣，人類無法在月球上生存！\n\n人類沒有氧氣只能生存**幾分鐘**，但沒有食物可以生存幾天，沒有水可以生存幾小時。\n\n所以 NASA 把氧氣排在第 1 位，這是最基本的生存需求！"
-      },
-      {
-        id: 3,
-        title: "🗺️ 路線出現困難",
-        situation: "前方地形崎嶇，路線不清楚，小隊擔心會偏離方向。",
-        event: "你們站在一個分岔路口，不知道該往哪個方向走！",
-        questions: [
-          "尼龍繩在甚麼情況下才會比星圖更有用？",
-          "當路線不清楚時，應該「繼續前進」還是「先確認方向」？",
-          "如果隊員意見不同，你會怎樣協助小組作決定？"
-        ],
-        itemQuestion: "你認為應該使用哪一項工具？",
-        correctItem: "星際地圖",
-        wrongItems: ["尼龍繩", "急救箱"],
-        explanation: "🗺️ **正確答案：星圖（星際地圖）！**\n\n星圖可協助確認位置與方向，避免迷路。\n\n當路線不清楚時，應該**先確認方向**再前進，而不是盲目往前走！\n\n尼龍繩在攀爬或綁住隊員時更有用，但找方向還是要靠星圖！"
-      },
-      {
-        id: 4,
-        title: "🩹 隊員受傷了",
-        situation: "一名隊員在行走時跌倒，手部擦傷，影響行動。",
-        event: "隊員的手在流血，需要立即處理傷口！",
-        questions: [
-          "為甚麼先照顧受傷隊員對整個小隊都很重要？",
-          "如果受傷的隊員是隊長，你會如何調整分工？",
-          "除了工具，你認為還需要甚麼才能保障安全？"
-        ],
-        itemQuestion: "你認為應立即使用哪一項工具？",
-        correctItem: "急救箱",
-        wrongItems: ["食水", "手電筒"],
-        explanation: "🩹 **正確答案：急救包（急救箱）！**\n\n急救包可即時處理傷口，確保隊員安全。\n\n照顧受傷隊員對整個小隊都很重要，因為：\n1. 傷口可能惡化影響行動\n2. 團隊需要每個成員的力量\n3. 互相照顧能提升團隊士氣！"
-      },
-      {
-        id: 5,
-        title: "📻 需要讓母船知道我們的位置",
-        situation: "你們相信已接近母船，但需要發出訊號讓對方知道你們的位置。",
-        event: "遠處似乎看到母船的影子，但對方好像不知道你們在哪裡！",
-        questions: [
-          "如果收音機突然無法使用，你還可以怎樣讓對方找到你？",
-          "為甚麼「溝通」在解難過程中十分重要？",
-          "如果只能發出一次訊號，你會傳達哪些最重要的資訊？"
-        ],
-        itemQuestion: "你認為最合適使用哪一項工具？",
-        correctItem: "太陽能收音機",
-        wrongItems: ["星際地圖", "濃縮食物"],
-        explanation: "📻 **正確答案：太陽能收音機！**\n\n收音機可用作通訊，協助母船接收訊號並安排救援。\n\n溝通在解難過程中非常重要，因為：\n1. 讓對方知道你的位置\n2. 可以協調救援行動\n3. 減少誤解和錯誤！\n\n如果只能發一次訊號，最重要是說明**位置**和**人數**！"
+      en: {
+        title: "🌙 Moon Survival Challenge",
+        subtitle: "Can you survive on the Moon?",
+        storyTitle: "👨‍🚀 Your Space Adventure!",
+        storyContent: `Oh no! Your spaceship has crashed on the Moon! 🚀💥<br><br>
+          You need to walk <strong>300 km</strong> to reach the lunar base!<br><br>
+          You found <strong>15 items</strong> and must decide which are most important!<br><br>
+          Then there will be <strong>5 event cards</strong> to help you think about Moon survival! 🌟`,
+        instructions: "👆 <strong>Drag items to rank them!</strong>",
+        instructionsSub: "🏆 #1 = Most Important → #15 = Least Important",
+        startBtn: "🚀 Start Challenge!",
+        dragInstruction: "👆 Hold and drag items to rank them! #1 = Most Important",
+        submitBtn: "✅ Submit & Start Adventure!",
+        homeBtn: "🏠 Home",
+        footer1: "Created by <strong>Cheung Chung Wah Joyce</strong>",
+        footer2: "MEDD8869 Moon Survival Game (Primary Edition)",
+        rankingReceived: "🎉 **Your ranking is received!**\n\nNow begins your lunar adventure... You will encounter 5 event cards!\n\nEach card has thinking questions to help you understand Moon survival challenges! 🚀",
+        eventCardLabel: "🟦 Event Card",
+        situationLabel: "📍 Situation",
+        eventLabel: "⚡ Emergency",
+        questionsLabel: "🤔 Think About It",
+        correctFeedback: "✅ Correct! Great job!",
+        wrongFeedback: "❌ Not quite right!",
+        nextCardBtn: "➡️ Next Event Card!",
+        viewResultsBtn: "🏆 View Final Results!",
+        congratsMsg: "🎊 **Congratulations on completing all event cards!**\n\nLet's see your ranking score...",
+        scoreLabel: "Your Score",
+        scoreTip: "(Lower is better! 0 = Perfect!)",
+        badgeExpert: "🏆 Space Expert!",
+        badgeGood: "🌟 Great Astronaut!",
+        badgeNovice: "🚀 Space Rookie!",
+        tableItem: "Item",
+        tableYou: "You",
+        tableNasa: "NASA",
+        tableDiff: "Diff",
+        nasaQuestion: "**📚 Want to see NASA's official ranking?**",
+        viewNasaBtn: "🚀 View NASA's Answer!",
+        restartBtn: "🔄 Play Again!",
+        nasaTitle: "🌟 **NASA Expert Ranking**\n\nHere is NASA's official ranking based on Moon survival needs:",
+        nasaOfficialTitle: "🏛️ NASA Official Answer",
+        tableRank: "Rank",
+        tableReason: "Reason",
+        learningSummary: `**🎓 Key Learning Points:**
+
+**🥇 Most Important (1-5):**
+- **Oxygen Tanks** - No air means death in minutes!
+- **Drinking Water** - Essential for survival
+- **Star Chart** - No GPS on Moon, use stars for navigation
+- **Astronaut Food Packs** - Walking 300km needs energy
+- **Solar-Powered Radio** - Contact base for rescue
+
+**🥈 Useful (6-10):**
+- Climbing Rope, First Aid Kit, Shiny Silk Sheet, Inflatable Shelter, Signal Mirror
+
+**🥉 Less Useful (11-15):**
+- **CO2 Fire Extinguisher** - Only useful as propellant
+- **Dehydrated Milk** - Needs water to use
+- **Portable Heating Unit** - Spacesuit already has heating
+- **High-Power Binoculars** - Can see far but can't navigate
+- **Magnifying Glass** - No oxygen, can't start fire!`,
+        learnMore: "Learn more:",
+        senderBot: "🤖 Dr. Space",
+        senderIncident: "⚠️ Emergency",
+        senderLesson: "📚 Learning Point"
       }
-    ];
+    };
+
+    // Items in both languages
+    const itemsData = {
+      zh: [
+        { id: 1, emoji: "🛢️", name: "氧氣瓶", nasaRank: 1, reason: "月球沒有空氣，這是生存必需品！沒有氧氣幾分鐘就會死亡！每個重 45 公斤。" },
+        { id: 2, emoji: "💧", name: "飲用水", nasaRank: 2, reason: "人體需要水來維持生命，月球沒有水源，20 公升足夠幾天使用！" },
+        { id: 3, emoji: "🗺️", name: "星圖", nasaRank: 3, reason: "月球沒有 GPS，需要靠星星來辨認方向！星圖可以幫助你找到正確路線！" },
+        { id: 4, emoji: "🍫", name: "太空食物包", nasaRank: 4, reason: "步行 300 公里需要大量能量，12 公斤的濃縮食物營養豐富！" },
+        { id: 5, emoji: "📻", name: "太陽能收音機", nasaRank: 5, reason: "可以與月球基地聯絡，請求救援！太陽能供電，不用擔心電池！" },
+        { id: 6, emoji: "🪢", name: "攀爬繩", nasaRank: 6, reason: "15 米長的繩子可以綁住隊友一起行走，通過危險地帶時互相幫助！" },
+        { id: 7, emoji: "🩹", name: "急救箱", nasaRank: 7, reason: "受傷時可以包紮傷口，還有修補太空衣的材料！" },
+        { id: 8, emoji: "✨", name: "反光絲綢布", nasaRank: 8, reason: "可以反射太陽光、遮擋輻射、搬運物品，用途廣泛！" },
+        { id: 9, emoji: "⛺", name: "充氣帳篷", nasaRank: 9, reason: "可以提供臨時庇護所，遮擋太陽輻射和宇宙射線！" },
+        { id: 10, emoji: "🪞", name: "信號鏡", nasaRank: 10, reason: "可以反射太陽光發出求救信號，讓救援隊看到你的位置！" },
+        { id: 11, emoji: "🧯", name: "二氧化碳滅火器", nasaRank: 11, reason: "可以當作噴射推進器使用！噴出的氣體可以推動你前進！" },
+        { id: 12, emoji: "🥛", name: "脫水奶粉", nasaRank: 12, reason: "有營養但需要加水，沒有水就沒什麼用處！" },
+        { id: 13, emoji: "🔋", name: "電池發熱包", nasaRank: 13, reason: "太空衣已經有保暖功能，在陽光照射區域不太需要！" },
+        { id: 14, emoji: "🔭", name: "高倍率雙筒望遠鏡", nasaRank: 14, reason: "可以看到遠處地標，但對導航幫助不大，比星圖差！" },
+        { id: 15, emoji: "🔍", name: "放大鏡", nasaRank: 15, reason: "月球沒有氧氣，無法用放大鏡聚光生火！基本上沒有用途！" }
+      ],
+      en: [
+        { id: 1, emoji: "🛢️", name: "Oxygen Tanks (45 kg ea.)", nasaRank: 1, reason: "No air on Moon - essential for survival! You'll die in minutes without oxygen!" },
+        { id: 2, emoji: "💧", name: "Drinking Water (20 Liters)", nasaRank: 2, reason: "Humans need water to survive. No water sources on Moon, 20 liters lasts several days!" },
+        { id: 3, emoji: "🗺️", name: "Star Chart", nasaRank: 3, reason: "No GPS on Moon! You need stars to find direction. Star chart helps you find the right path!" },
+        { id: 4, emoji: "🍫", name: "12kg Astronaut Food Packs", nasaRank: 4, reason: "Walking 300km needs lots of energy. 12kg of concentrated food is nutritious!" },
+        { id: 5, emoji: "📻", name: "Solar-Powered Radio", nasaRank: 5, reason: "Can contact lunar base for rescue! Solar-powered, no battery worries!" },
+        { id: 6, emoji: "🪢", name: "15m Climbing Rope", nasaRank: 6, reason: "15m rope can tie teammates together, helping each other through dangerous areas!" },
+        { id: 7, emoji: "🩹", name: "First Aid Kit", nasaRank: 7, reason: "Can bandage wounds and has materials to repair spacesuits!" },
+        { id: 8, emoji: "✨", name: "Shiny Silk Sheet", nasaRank: 8, reason: "Reflects sunlight, blocks radiation, carries items - many uses!" },
+        { id: 9, emoji: "⛺", name: "Inflatable Shelter", nasaRank: 9, reason: "Provides temporary shelter, blocks solar radiation and cosmic rays!" },
+        { id: 10, emoji: "🪞", name: "Signal Mirror", nasaRank: 10, reason: "Reflects sunlight as distress signal, helps rescue team find you!" },
+        { id: 11, emoji: "🧯", name: "CO2 Fire Extinguisher", nasaRank: 11, reason: "Can be used as jet propulsion! The gas can push you forward!" },
+        { id: 12, emoji: "🥛", name: "Dehydrated Milk", nasaRank: 12, reason: "Nutritious but needs water to use. Useless without water!" },
+        { id: 13, emoji: "🔋", name: "Portable Heating Unit", nasaRank: 13, reason: "Spacesuit already has heating. Not needed in sunlit areas!" },
+        { id: 14, emoji: "🔭", name: "High-Power Binoculars", nasaRank: 14, reason: "Can see distant landmarks, but not helpful for navigation. Star chart is better!" },
+        { id: 15, emoji: "🔍", name: "Magnifying Glass", nasaRank: 15, reason: "No oxygen on Moon - can't start fire with magnifying glass! Basically useless!" }
+      ]
+    };
+
+    // Event cards in both languages
+    const eventCardsData = {
+      zh: [
+        {
+          id: 1,
+          title: "🧭 我們迷路了！",
+          situation: "你的小隊需要在月球表面找出前往母船的正確方向，但望遠鏡只能看到遠處地標。",
+          event: "你們不知道該往哪個方向走，周圍看起來都一樣！",
+          questions: [
+            "如果在地球的森林迷路，你會選哪一項工具？為甚麼？",
+            "為甚麼同一件工具在不同地方，效果會不同？",
+            "若天色昏暗，星圖不清楚，你還可以怎樣協助隊伍？"
+          ],
+          itemQuestion: "你認為應該使用哪一項工具來辨別方向？",
+          correctItem: "星圖",
+          wrongItems: ["高倍率雙筒望遠鏡", "放大鏡"],
+          explanation: "🗺️ **正確答案：星圖！**\n\n月球上沒有 GPS，星體位置固定，有助辨別方向。\n\n這就是為什麼 NASA 把星圖排在第 3 位！在月球上，我們需要靠觀察星星的位置來找到正確方向。\n\n望遠鏡可以看遠處，但不能幫你確定方向！"
+        },
+        {
+          id: 2,
+          title: "😰 隊員感到不適",
+          situation: "有隊員出現呼吸急促及疲倦的情況，行動開始變慢。",
+          event: "隊員的臉色變得蒼白，呼吸越來越困難！",
+          questions: [
+            "食物、水、氧氣之中，哪一樣最先需要？請排序並解釋。",
+            "為甚麼有些資源是「必需品」，而不是「有用就好」？",
+            "如果氧氣有限，你會如何作出公平分配？"
+          ],
+          itemQuestion: "你認為此時最需要使用哪一項工具？",
+          correctItem: "氧氣瓶",
+          wrongItems: ["太空食物包", "飲用水"],
+          explanation: "🛢️ **正確答案：氧氣瓶！**\n\n沒有氧氣，人類無法在月球上生存！\n\n人類沒有氧氣只能生存**幾分鐘**，但沒有食物可以生存幾天，沒有水可以生存幾小時。\n\n所以 NASA 把氧氣排在第 1 位，這是最基本的生存需求！"
+        },
+        {
+          id: 3,
+          title: "🗺️ 路線出現困難",
+          situation: "前方地形崎嶇，路線不清楚，小隊擔心會偏離方向。",
+          event: "你們站在一個分岔路口，不知道該往哪個方向走！",
+          questions: [
+            "攀爬繩在甚麼情況下才會比星圖更有用？",
+            "當路線不清楚時，應該「繼續前進」還是「先確認方向」？",
+            "如果隊員意見不同，你會怎樣協助小組作決定？"
+          ],
+          itemQuestion: "你認為應該使用哪一項工具？",
+          correctItem: "星圖",
+          wrongItems: ["攀爬繩", "急救箱"],
+          explanation: "🗺️ **正確答案：星圖！**\n\n星圖可協助確認位置與方向，避免迷路。\n\n當路線不清楚時，應該**先確認方向**再前進，而不是盲目往前走！\n\n攀爬繩在攀爬或綁住隊員時更有用，但找方向還是要靠星圖！"
+        },
+        {
+          id: 4,
+          title: "🩹 隊員受傷了",
+          situation: "一名隊員在行走時跌倒，手部擦傷，影響行動。",
+          event: "隊員的手在流血，需要立即處理傷口！",
+          questions: [
+            "為甚麼先照顧受傷隊員對整個小隊都很重要？",
+            "如果受傷的隊員是隊長，你會如何調整分工？",
+            "除了工具，你認為還需要甚麼才能保障安全？"
+          ],
+          itemQuestion: "你認為應立即使用哪一項工具？",
+          correctItem: "急救箱",
+          wrongItems: ["飲用水", "反光絲綢布"],
+          explanation: `🩹 **正確答案：急救箱！**
+
+急救箱可即時處理傷口，確保隊員安全。
+
+照顧受傷隊員對整個小隊都很重要，因為：
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>傷口可能惡化影響行動</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>團隊需要每個成員的力量</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>互相照顧能提升團隊士氣！</span></div>`
+        },
+        {
+          id: 5,
+          title: "📻 需要讓母船知道我們的位置",
+          situation: "你們相信已接近母船，但需要發出訊號讓對方知道你們的位置。",
+          event: "遠處似乎看到母船的影子，但對方好像不知道你們在哪裡！",
+          questions: [
+            "如果收音機突然無法使用，你還可以怎樣讓對方找到你？",
+            "為甚麼「溝通」在解難過程中十分重要？",
+            "如果只能發出一次訊號，你會傳達哪些最重要的資訊？"
+          ],
+          itemQuestion: "你認為最合適使用哪一項工具？",
+          correctItem: "太陽能收音機",
+          wrongItems: ["星圖", "太空食物包"],
+          explanation: `📻 **正確答案：太陽能收音機！**
+
+收音機可用作通訊，協助母船接收訊號並安排救援。
+
+溝通在解難過程中非常重要，因為：
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>讓對方知道你的位置</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>可以協調救援行動</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>減少誤解和錯誤！</span></div>
+
+如果只能發一次訊號，最重要是說明**位置**和**人數**！`
+        }
+      ],
+      en: [
+        {
+          id: 1,
+          title: "🧭 We're Lost!",
+          situation: "Your team needs to find the right direction to the mothership on the lunar surface, but the binoculars can only see distant landmarks.",
+          event: "You don't know which way to go - everything looks the same!",
+          questions: [
+            "If you were lost in a forest on Earth, which tool would you choose? Why?",
+            "Why might the same tool work differently in different places?",
+            "If it's too dark to see the stars clearly, how else could you help your team?"
+          ],
+          itemQuestion: "Which tool should you use to find direction?",
+          correctItem: "Star Chart",
+          wrongItems: ["High-Power Binoculars", "Magnifying Glass"],
+          explanation: "🗺️ **Correct Answer: Star Chart!**\n\nThere's no GPS on the Moon, but star positions are fixed and help with navigation.\n\nThis is why NASA ranks the Star Chart at #3! On the Moon, we need to observe star positions to find the right direction.\n\nBinoculars can see far, but can't help you determine direction!"
+        },
+        {
+          id: 2,
+          title: "😰 Teammate Feels Unwell",
+          situation: "A teammate is breathing rapidly and feeling tired. They're slowing down.",
+          event: "The teammate's face is turning pale and breathing is getting harder!",
+          questions: [
+            "Between food, water, and oxygen - which do you need first? Rank and explain.",
+            "Why are some resources 'essential' rather than just 'nice to have'?",
+            "If oxygen is limited, how would you distribute it fairly?"
+          ],
+          itemQuestion: "What tool does the team need most right now?",
+          correctItem: "Oxygen Tanks (45 kg ea.)",
+          wrongItems: ["12kg Astronaut Food Packs", "Drinking Water (20 Liters)"],
+          explanation: "🛢️ **Correct Answer: Oxygen Tanks!**\n\nWithout oxygen, humans cannot survive on the Moon!\n\nHumans can only survive **a few minutes** without oxygen, but can survive days without food and hours without water.\n\nThat's why NASA ranks Oxygen at #1 - it's the most basic survival need!"
+        },
+        {
+          id: 3,
+          title: "🗺️ Difficult Route",
+          situation: "The terrain ahead is rough and the path is unclear. The team worries about going the wrong way.",
+          event: "You're standing at a fork in the road, not sure which way to go!",
+          questions: [
+            "When would the climbing rope be more useful than the star chart?",
+            "When the route is unclear, should you 'keep going' or 'confirm direction first'?",
+            "If teammates disagree, how would you help the group decide?"
+          ],
+          itemQuestion: "Which tool should you use?",
+          correctItem: "Star Chart",
+          wrongItems: ["15m Climbing Rope", "First Aid Kit"],
+          explanation: "🗺️ **Correct Answer: Star Chart!**\n\nThe star chart helps confirm your position and direction, preventing you from getting lost.\n\nWhen the route is unclear, you should **confirm direction first** before moving forward!\n\nThe climbing rope is more useful for climbing or tying teammates together, but for finding direction, use the star chart!"
+        },
+        {
+          id: 4,
+          title: "🩹 Teammate Injured",
+          situation: "A teammate fell while walking and scraped their hand, affecting their movement.",
+          event: "The teammate's hand is bleeding and needs immediate treatment!",
+          questions: [
+            "Why is taking care of an injured teammate important for the whole team?",
+            "If the injured teammate is the leader, how would you adjust roles?",
+            "Besides tools, what else do you need to ensure safety?"
+          ],
+          itemQuestion: "Which tool should you use immediately?",
+          correctItem: "First Aid Kit",
+          wrongItems: ["Drinking Water (20 Liters)", "Shiny Silk Sheet"],
+          explanation: `🩹 **Correct Answer: First Aid Kit!**
+
+The first aid kit can treat wounds immediately, keeping teammates safe.
+
+Taking care of injured teammates is important for the whole team because:
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>Wounds can worsen and affect movement</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>The team needs everyone's strength</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>Caring for each other boosts team morale!</span></div>`
+        },
+        {
+          id: 5,
+          title: "📻 Need to Signal the Mothership",
+          situation: "You believe you're close to the mothership, but need to signal them your location.",
+          event: "You can see the mothership's shadow in the distance, but they don't seem to know where you are!",
+          questions: [
+            "If the radio suddenly stops working, how else could you help them find you?",
+            "Why is 'communication' so important in problem-solving?",
+            "If you can only send one signal, what's the most important information to share?"
+          ],
+          itemQuestion: "Which tool is most suitable?",
+          correctItem: "Solar-Powered Radio",
+          wrongItems: ["Star Chart", "12kg Astronaut Food Packs"],
+          explanation: `📻 **Correct Answer: Solar-Powered Radio!**
+
+The radio allows communication, helping the mothership receive signals and arrange rescue.
+
+Communication is crucial in problem-solving because:
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>Lets others know your location</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>Coordinates rescue efforts</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>Reduces misunderstandings!</span></div>
+
+If you can only send one signal, the most important info is **location** and **number of people**!`
+        }
+      ]
+    };
+
+    // Get current items based on language
+    function getItems() {
+      return itemsData[currentLang];
+    }
+
+    // Get current event cards based on language
+    function getEventCards() {
+      return eventCardsData[currentLang];
+    }
+
+    // Get translation
+    function t(key) {
+      return translations[currentLang][key] || key;
+    }
+
+    // Items and event cards are now stored in itemsData and eventCardsData above
+    // Use getItems() and getEventCards() to access them based on current language
 
     let shuffledEvents = []; // 儲存隨機排序後的事件卡
 
@@ -872,7 +1174,7 @@
 
       // Show/hide home button
       const homeBtn = document.getElementById('home-btn');
-      if (id === 'intro-screen') {
+      if (id === 'intro-screen' || id === 'lang-screen') {
         homeBtn.style.display = 'none';
       } else {
         homeBtn.style.display = 'flex';
@@ -883,8 +1185,35 @@
       location.reload();
     }
 
+    // Language selection and UI update
+    function selectLanguage(lang) {
+      currentLang = lang;
+      updateUILanguage();
+      showScreen('intro-screen');
+    }
+
+    function updateUILanguage() {
+      // Update header
+      document.getElementById('main-title').textContent = t('title');
+      document.getElementById('main-subtitle').textContent = t('subtitle');
+
+      // Update intro screen
+      document.getElementById('story-title').textContent = t('storyTitle');
+      document.getElementById('story-content').innerHTML = t('storyContent');
+      document.getElementById('intro-instructions').innerHTML = t('instructions');
+      document.getElementById('intro-instructions-sub').textContent = t('instructionsSub');
+      document.getElementById('start-btn').textContent = t('startBtn');
+
+      // Update ranking screen
+      document.getElementById('drag-instruction').textContent = t('dragInstruction');
+      document.getElementById('submit-btn').textContent = t('submitBtn');
+
+      // Update home button
+      document.getElementById('home-btn').innerHTML = t('homeBtn');
+    }
+
     function startRanking() {
-      playerRanking = shuffleArray([...items]);
+      playerRanking = shuffleArray([...getItems()]);
       renderItems();
       showScreen('ranking-screen');
       gamePhase = 'ranking';
@@ -952,7 +1281,7 @@
       const m = document.getElementById('messages');
       const msg = document.createElement('div');
       msg.className = `message ${type}`;
-      const sender = type === 'incident' ? '⚠️ 突發事件' : type === 'lesson' ? '📚 學習重點' : '🤖 太空博士';
+      const sender = type === 'incident' ? t('senderIncident') : type === 'lesson' ? t('senderLesson') : t('senderBot');
       if (type !== 'user') {
         msg.innerHTML = `<div class="sender">${sender}</div><div class="message-content">${isHTML ? content : marked.parse(content)}</div>`;
       } else {
@@ -964,11 +1293,11 @@
 
     function showTyping() {
       const m = document.getElementById('messages');
-      const t = document.createElement('div');
-      t.className = 'message bot';
-      t.id = 'typing';
-      t.innerHTML = `<div class="sender">🤖 太空博士</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
-      m.appendChild(t);
+      const typingEl = document.createElement('div');
+      typingEl.className = 'message bot';
+      typingEl.id = 'typing';
+      typingEl.innerHTML = `<div class="sender">${t('senderBot')}</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+      m.appendChild(typingEl);
       m.scrollTop = m.scrollHeight;
     }
 
@@ -1001,9 +1330,9 @@
       currentIncidentIndex = 0;
 
       // 隨機排序事件卡
-      shuffledEvents = shuffleArray([...eventCards]);
+      shuffledEvents = shuffleArray([...getEventCards()]);
 
-      await botSay("🎉 **已收到你的排名！**\n\n現在開始月球冒險之旅... 你會遇到 5 張事件卡！\n\n每張卡都有思考問題，幫助你更深入了解月球生存的挑戰！🚀");
+      await botSay(t('rankingReceived'));
 
       await new Promise(r => setTimeout(r, 800));
       await showEventCard(0);
@@ -1032,8 +1361,9 @@
       c.innerHTML = '';
 
       // Build choices array: 1 correct + 2 wrong
-      const correctItemData = items.find(i => i.name === card.correctItem);
-      const wrongItemsData = card.wrongItems.map(name => items.find(i => i.name === name));
+      const currentItems = getItems();
+      const correctItemData = currentItems.find(i => i.name === card.correctItem);
+      const wrongItemsData = card.wrongItems.map(name => currentItems.find(i => i.name === name));
 
       const allChoices = [
         { ...correctItemData, isCorrect: true },
@@ -1064,12 +1394,12 @@
 
       if (choice.isCorrect) {
         const feedback = `<div class="feedback-correct" style="padding:12px;border-radius:12px;margin:5px 0">
-          <strong>✅ 答對了！太棒了！</strong>
+          <strong>${t('correctFeedback')}</strong>
         </div>`;
         await botSay(feedback, true);
       } else {
         const feedback = `<div class="feedback-wrong" style="padding:12px;border-radius:12px;margin:5px 0">
-          <strong>❌ 不太對喔！</strong>
+          <strong>${t('wrongFeedback')}</strong>
         </div>`;
         await botSay(feedback, true);
       }
@@ -1100,22 +1430,22 @@
 
       msg.innerHTML = `
         <div class="event-card-header">
-          <span class="event-card-badge">🟦 事件卡 ${displayNum}/5</span>
+          <span class="event-card-badge">${t('eventCardLabel')} ${displayNum}/5</span>
         </div>
         <div class="event-card-title">${card.title}</div>
 
         <div class="event-card-section situation">
-          <div class="event-card-section-title">📍 情境說明</div>
+          <div class="event-card-section-title">${t('situationLabel')}</div>
           <div>${card.situation}</div>
         </div>
 
         <div class="event-card-section event">
-          <div class="event-card-section-title">⚡ 突發事件</div>
+          <div class="event-card-section-title">${t('eventLabel')}</div>
           <div>${card.event}</div>
         </div>
 
         <div class="event-card-section questions">
-          <div class="event-card-section-title">🤔 思考問題</div>
+          <div class="event-card-section-title">${t('questionsLabel')}</div>
           ${questionsHTML}
         </div>
       `;
@@ -1147,16 +1477,16 @@
 
     function showNextBtn() {
       if (currentIncidentIndex < shuffledEvents.length - 1) {
-        setReplies([{ text: "➡️ 下一張事件卡！", value: "next", primary: true }]);
+        setReplies([{ text: t('nextCardBtn'), value: "next", primary: true }]);
       } else {
-        setReplies([{ text: "🏆 查看最終結果！", value: "results", primary: true }]);
+        setReplies([{ text: t('viewResultsBtn'), value: "results", primary: true }]);
       }
     }
 
     async function showResults() {
       gamePhase = 'results';
 
-      await botSay("🎊 **恭喜你完成了所有事件卡！**\n\n現在來看看你的排名成績...");
+      await botSay(t('congratsMsg'));
 
       let totalDiff = 0;
       const results = [];
@@ -1168,14 +1498,14 @@
       });
 
       let badge, badgeClass;
-      if (totalDiff <= 20) { badge = "🏆 太空專家！"; badgeClass = "gold"; }
-      else if (totalDiff <= 40) { badge = "🌟 優秀太空人！"; badgeClass = "silver"; }
-      else { badge = "🚀 太空新手！"; badgeClass = "bronze"; }
+      if (totalDiff <= 20) { badge = t('badgeExpert'); badgeClass = "gold"; }
+      else if (totalDiff <= 40) { badge = t('badgeGood'); badgeClass = "silver"; }
+      else { badge = t('badgeNovice'); badgeClass = "bronze"; }
 
-      const scoreCard = `<div class="score-card"><div class="score-label">你的分數</div><div class="score-number">${totalDiff}</div><div style="opacity:0.7;font-size:0.8rem">（分數越低越好！0分 = 完美！）</div><div class="badge ${badgeClass}">${badge}</div></div>`;
+      const scoreCard = `<div class="score-card"><div class="score-label">${t('scoreLabel')}</div><div class="score-number">${totalDiff}</div><div style="opacity:0.7;font-size:0.8rem">${t('scoreTip')}</div><div class="badge ${badgeClass}">${badge}</div></div>`;
       await botSay(scoreCard, true, 800);
 
-      let table = `<table class="results-table"><tr><th>物品</th><th>你</th><th>NASA</th><th>差</th></tr>`;
+      let table = `<table class="results-table"><tr><th>${t('tableItem')}</th><th>${t('tableYou')}</th><th>${t('tableNasa')}</th><th>${t('tableDiff')}</th></tr>`;
       results.forEach(item => {
         const dc = item.diff === 0 ? 'diff-good' : item.diff <= 3 ? 'diff-ok' : 'diff-bad';
         table += `<tr><td>${item.emoji} ${item.name}</td><td>${item.playerRank}</td><td>${item.nasaRank}</td><td class="${dc}">${item.diff === 0 ? '✓' : item.diff}</td></tr>`;
@@ -1184,27 +1514,28 @@
       await botSay(table, true, 400);
 
       // 顯示 NASA 標準答案按鈕
-      await botSay("**📚 想知道 NASA 專家的標準排名嗎？**");
+      await botSay(t('nasaQuestion'));
 
       setReplies([
-        { text: "🚀 查看 NASA 標準答案！", value: "show_nasa", primary: true },
-        { text: "🔄 再玩一次！", value: "restart" }
+        { text: t('viewNasaBtn'), value: "show_nasa", primary: true },
+        { text: t('restartBtn'), value: "restart" }
       ]);
     }
 
     async function showNASAAnswer() {
-      await botSay("🌟 **NASA 專家標準排名**\n\n以下是 NASA 太空專家根據月球生存需求而制定的官方排名：");
+      await botSay(t('nasaTitle'));
 
-      // 獲取排序後的物品（只取前15個，排除手電筒）
-      const sortedItems = [...items].filter(i => i.nasaRank <= 15).sort((a, b) => a.nasaRank - b.nasaRank);
+      // 獲取排序後的物品
+      const currentItems = getItems();
+      const sortedItems = [...currentItems].filter(i => i.nasaRank <= 15).sort((a, b) => a.nasaRank - b.nasaRank);
 
       let nasaTable = `<div style="background:linear-gradient(145deg, rgba(168,85,247,0.2), rgba(78,205,196,0.15)); border:3px solid var(--cosmic-purple); border-radius:16px; padding:16px; margin:10px 0;">
         <div style="text-align:center; margin-bottom:12px;">
           <span style="font-size:1.5rem;">🏛️</span>
-          <strong style="color:var(--moon-yellow); font-size:1.1rem;"> NASA 官方標準答案</strong>
+          <strong style="color:var(--moon-yellow); font-size:1.1rem;"> ${t('nasaOfficialTitle')}</strong>
         </div>
         <table class="results-table" style="margin:0;">
-          <tr><th style="width:15%">排名</th><th>物品</th><th style="width:55%">原因</th></tr>`;
+          <tr><th style="width:15%">${t('tableRank')}</th><th>${t('tableItem')}</th><th style="width:55%">${t('tableReason')}</th></tr>`;
 
       sortedItems.forEach(item => {
         let rankStyle = '';
@@ -1229,47 +1560,33 @@
       await botSay(nasaTable, true, 600);
 
       // 總結重點
-      await botSay(`**🎓 學習重點總結：**
-
-**🥇 最重要（第1-5名）：**
-- **氧氣** - 沒有空氣，幾分鐘就會死亡！
-- **食水** - 人體需要水來維持生命
-- **星際地圖** - 月球沒有GPS，靠星星辨認方向
-- **濃縮食物** - 步行300公里需要能量
-- **收音機** - 可以與基地聯絡求救
-
-**🥈 有用（第6-10名）：**
-- 尼龍繩、急救箱、降落傘布、救生艇、信號彈
-
-**🥉 不太有用（第11-15名）：**
-- **滅火筒** - 只能當推進器用
-- **脫水奶** - 沒水就沒用
-- **太陽能暖爐** - 太空衣已保暖
-- **指南針** - 月球沒磁場，無法使用！
-- **火柴** - 月球沒氧氣，點不著！`);
+      await botSay(t('learningSummary'));
 
       await new Promise(r => setTimeout(r, 500));
 
+      const items1 = getItems();
       setReplies([
-        { text: "💨 了解更多：氧氣", value: "explain_1" },
-        { text: "🧭 了解更多：指南針", value: "explain_14" },
-        { text: "🔥 了解更多：火柴", value: "explain_15" },
-        { text: "🔄 再玩一次！", value: "restart", primary: true }
+        { text: `🛢️ ${t('learnMore')}${items1[0].name}`, value: "explain_1" },
+        { text: `🔭 ${t('learnMore')}${items1[13].name}`, value: "explain_14" },
+        { text: `🔍 ${t('learnMore')}${items1[14].name}`, value: "explain_15" },
+        { text: t('restartBtn'), value: "restart", primary: true }
       ]);
     }
 
     async function explainItem(rank) {
-      const item = items.find(i => i.nasaRank === rank);
+      const currentItems = getItems();
+      const item = currentItems.find(i => i.nasaRank === rank);
       if (item) {
-        await botSay(`**${item.emoji} ${item.name} (NASA 排第 ${item.nasaRank})**\n\n${item.reason}`);
+        const rankText = currentLang === 'zh' ? `NASA 排第 ${item.nasaRank}` : `NASA Rank #${item.nasaRank}`;
+        await botSay(`**${item.emoji} ${item.name} (${rankText})**\n\n${item.reason}`);
       }
       setReplies([
-        { text: "💨 氧氣", value: "explain_1" },
-        { text: "💧 食水", value: "explain_2" },
-        { text: "🗺️ 地圖", value: "explain_3" },
-        { text: "🧭 指南針", value: "explain_14" },
-        { text: "🔥 火柴", value: "explain_15" },
-        { text: "🔄 再玩一次！", value: "restart", primary: true }
+        { text: `🛢️ ${currentItems[0].name}`, value: "explain_1" },
+        { text: `💧 ${currentItems[1].name}`, value: "explain_2" },
+        { text: `🗺️ ${currentItems[2].name}`, value: "explain_3" },
+        { text: `🔭 ${currentItems[13].name}`, value: "explain_14" },
+        { text: `🔍 ${currentItems[14].name}`, value: "explain_15" },
+        { text: t('restartBtn'), value: "restart", primary: true }
       ]);
     }
 
