@@ -290,10 +290,10 @@
     }
 
     .message.event-card {
-      background: linear-gradient(145deg, rgba(78, 205, 196, 0.2), rgba(168, 85, 247, 0.15));
-      border: 3px solid var(--star-blue);
+      background: transparent;
+      border: none;
       max-width: 100%;
-      padding: 16px;
+      padding: 0;
     }
 
     .event-card-header {
@@ -316,6 +316,23 @@
       font-weight: 900;
       font-size: 1.1rem;
       color: var(--moon-yellow);
+    }
+
+    .event-card-image {
+      margin: 12px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 3px solid var(--moon-yellow);
+      box-shadow: 0 4px 15px rgba(255, 217, 61, 0.3);
+    }
+
+    .event-card-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 400px;
+      object-fit: contain;
+      background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
     }
 
     .event-card-section {
@@ -760,7 +777,7 @@
         storyContent: `大事不好！你的太空船在月球墜毀了！🚀💥<br><br>
           你需要步行 <strong>300 公里</strong>才能到達月球基地！<br><br>
           你找到了 <strong>15 件物品</strong>，必須決定哪些最重要！<br><br>
-          之後會有 <strong>5 張事件卡</strong>，幫助你思考月球生存的問題！🌟`,
+          之後會有 <strong>4 張事件卡</strong>，幫助你思考月球生存的問題！🌟`,
         instructions: "👆 <strong>拖拉物品排列順序！</strong>",
         instructionsSub: "🏆 #1 = 最重要 → #15 = 最不重要",
         startBtn: "🚀 開始挑戰！",
@@ -769,7 +786,7 @@
         homeBtn: "🏠 返回主頁",
         footer1: "Created by <strong>Cheung Chung Wah Joyce</strong>",
         footer2: "MEDD8869 Moon Survival Game (Primary Edition)",
-        rankingReceived: "🎉 **已收到你的排名！**\n\n現在開始月球冒險之旅... 你會遇到 5 張事件卡！\n\n每張卡都有思考問題，幫助你更深入了解月球生存的挑戰！🚀",
+        rankingReceived: "🎉 **已收到你的排名！**\n\n現在開始月球冒險之旅... 你會遇到 4 張事件卡！\n\n每張卡都有思考問題，幫助你更深入了解月球生存的挑戰！🚀",
         eventCardLabel: "🟦 事件卡",
         situationLabel: "📍 情境說明",
         eventLabel: "⚡ 突發事件",
@@ -825,7 +842,7 @@
         storyContent: `Oh no! Your spaceship has crashed on the Moon! 🚀💥<br><br>
           You need to walk <strong>300 km</strong> to reach the lunar base!<br><br>
           You found <strong>15 items</strong> and must decide which are most important!<br><br>
-          Then there will be <strong>5 event cards</strong> to help you think about Moon survival! 🌟`,
+          Then there will be <strong>4 event cards</strong> to help you think about Moon survival! 🌟`,
         instructions: "👆 <strong>Drag items to rank them!</strong>",
         instructionsSub: "🏆 #1 = Most Important → #15 = Least Important",
         startBtn: "🚀 Start Challenge!",
@@ -834,7 +851,7 @@
         homeBtn: "🏠 Home",
         footer1: "Created by <strong>Cheung Chung Wah Joyce</strong>",
         footer2: "MEDD8869 Moon Survival Game (Primary Edition)",
-        rankingReceived: "🎉 **Your ranking is received!**\n\nNow begins your lunar adventure... You will encounter 5 event cards!\n\nEach card has thinking questions to help you understand Moon survival challenges! 🚀",
+        rankingReceived: "🎉 **Your ranking is received!**\n\nNow begins your lunar adventure... You will encounter 4 event cards!\n\nEach card has thinking questions to help you understand Moon survival challenges! 🚀",
         eventCardLabel: "🟦 Event Card",
         situationLabel: "📍 Situation",
         eventLabel: "⚡ Emergency",
@@ -928,191 +945,189 @@
       zh: [
         {
           id: 1,
-          title: "🧭 我們迷路了！",
-          situation: "你的小隊需要在月球表面找出前往母船的正確方向，但望遠鏡只能看到遠處地標。",
-          event: "你們不知道該往哪個方向走，周圍看起來都一樣！",
+          title: "🏃‍♂️ 隱形的牆",
+          image: "https://pfst.cf2.poecdn.net/base/image/6080844d122a1145b6e5d111d894e0fbdbc71a58aad396afae02f03a61cf2815?w=1024&h=1536",
+          situation: "你正滑向懸崖邊緣！你要如何把自己推回來？",
+          event: "在月球上，你的「質量」和在地球上一樣，但沒有空氣幫你減速。雖然你感覺很輕，但你的身體就像一輛很重的卡車，一旦開始移動就很難停下來。",
           questions: [
-            "如果在地球的森林迷路，你會選哪一項工具？為甚麼？",
-            "為甚麼同一件工具在不同地方，效果會不同？",
-            "若天色昏暗，星圖不清楚，你還可以怎樣協助隊伍？"
+            "如果沒有風阻擋你，為什麼你的身體會一直向前衝？"
           ],
-          itemQuestion: "你認為應該使用哪一項工具來辨別方向？",
-          correctItem: "星圖",
-          wrongItems: ["高倍率雙筒望遠鏡", "放大鏡"],
-          explanation: "🗺️ **正確答案：星圖！**\n\n月球上沒有 GPS，星體位置固定，有助辨別方向。\n\n這就是為什麼 NASA 把星圖排在第 3 位！在月球上，我們需要靠觀察星星的位置來找到正確方向。\n\n望遠鏡可以看遠處，但不能幫你確定方向！"
+          itemQuestion: "你認為應使用哪一項工具來產生「推力」，救你離開邊緣？",
+          correctItem: "二氧化碳滅火器",
+          wrongItems: ["攀爬繩", "電池發熱包"],
+          howToSolve: "將滅火器的噴嘴指向懸崖的方向（你的前方），然後拉動手柄噴出氣體。",
+          explanation: `🧯 **正確答案：二氧化碳滅火器！**
+
+**解決方法：** 將滅火器的噴嘴指向懸崖的方向（你的前方），然後拉動手柄噴出氣體。
+
+**科學原理：** 這運用了**牛頓第三定律**。當氣體向前噴射時，它會以相等的力量「踢」你的身體向後，幫助你在真空中停下來或改變方向——因為那裡沒有空氣可以讓你推動。
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>**反作用力**：當你向前方噴出氣體，氣體會產生一股力量把你向後推。</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>**克服慣性**：這股強大的推力能抵銷你衝向懸崖的力量，幫你停下來。</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>**太空科學**：在沒有空氣的地方，這是唯一能讓你改變移動方向的方法！</span></div>`
         },
         {
           id: 2,
-          title: "😰 隊員感到不適",
-          situation: "有隊員出現呼吸急促及疲倦的情況，行動開始變慢。",
-          event: "隊員的臉色變得蒼白，呼吸越來越困難！",
+          title: "🕳️ 隱藏的天窗",
+          image: "https://pfst.cf2.poecdn.net/base/image/c745dcb2496017d775da77744db8d39d8af0c4c0ac664d4f7ab2a04fcd7719d7?w=1024&h=1536",
+          situation: "一個巨大的洞口通往地下。你要如何安全進入？",
+          event: "你發現了一個通往地下熔岩隧道的巨大「天窗」。這是躲避高溫和輻射的完美庇護所，但下降的坡度很陡峭且危險。你必須讓團隊安全下去，不讓任何人受傷。",
           questions: [
-            "食物、水、氧氣之中，哪一樣最先需要？請排序並解釋。",
-            "為甚麼有些資源是「必需品」，而不是「有用就好」？",
-            "如果氧氣有限，你會如何作出公平分配？"
+            "為什麼降落傘在月球上不能像在地球上那樣讓你緩緩飄落？"
           ],
-          itemQuestion: "你認為此時最需要使用哪一項工具？",
-          correctItem: "氧氣瓶",
-          wrongItems: ["太空食物包", "飲用水"],
-          explanation: "🛢️ **正確答案：氧氣瓶！**\n\n沒有氧氣，人類無法在月球上生存！\n\n人類沒有氧氣只能生存**幾分鐘**，但沒有食物可以生存幾天，沒有水可以生存幾小時。\n\n所以 NASA 把氧氣排在第 1 位，這是最基本的生存需求！"
+          itemQuestion: "你認為應使用哪一項工具來幫助團隊安全進入？",
+          correctItem: "反光絲綢布",
+          wrongItems: ["充氣帳篷", "急救箱"],
+          howToSolve: "不要嘗試用它來飛！相反，把這種堅韌的布料當作保護性滑道使用。把它鋪在尖銳的岩石上滑下去，或者用它包裹物資，這樣在往下放時不會損壞。",
+          explanation: `✨ **正確答案：反光絲綢布！**
+
+**解決方法：** 不要嘗試用它來飛！相反，把這種堅韌的布料當作保護性滑道使用。把它鋪在尖銳的岩石上滑下去，或者用它包裹物資，這樣在往下放時不會損壞。
+
+**科學原理：** 降落傘在月球上無法讓你「飄浮」，因���沒有空氣可以撐開布料。但是，尼龍非常堅韌且輕便，是保護你的太空衣不被尖銳如玻璃的月球岩石刺破的完美工具。
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>**無空氣阻力**：月球沒有大氣層，降落傘無法像在地球一樣張開減速。</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>**材料特性**：絲綢布堅韌耐用，可以保護你免受尖銳岩石傷害。</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>**創意運用**：同一件工具在不同環境下有不同的用途！</span></div>`
         },
         {
           id: 3,
-          title: "🗺️ 路線出現困難",
-          situation: "前方地形崎嶇，路線不清楚，小隊擔心會偏離方向。",
-          event: "你們站在一個分岔路口，不知道該往哪個方向走！",
+          title: "🧭 磁鐵之謎",
+          image: "https://pfst.cf2.poecdn.net/base/image/41b2e1dd71c53dd9b73581f727098584f31206d94a6247b91f1cb3b07c1898e7?w=1024&h=1536",
+          situation: "你的指南針壞了！用星星找到回家的路。",
+          event: "你迷失在一片平坦的平原上，電子GPS也壞了。在地球上，你會使用磁性指南針，但在月球上沒有磁「北極」來移動指針。你必須利用天空找到返回基地的路。",
           questions: [
-            "攀爬繩在甚麼情況下才會比星圖更有用？",
-            "當路線不清楚時，應該「繼續前進」還是「先確認方向」？",
-            "如果隊員意見不同，你會怎樣協助小組作決定？"
+            "為什麼你可以在月球的白天看到星星，但在地球上卻看不到？"
           ],
-          itemQuestion: "你認為應該使用哪一項工具？",
+          itemQuestion: "你認為應使用哪一項工具來辨別方向？",
           correctItem: "星圖",
-          wrongItems: ["攀爬繩", "急救箱"],
-          explanation: "🗺️ **正確答案：星圖！**\n\n星圖可協助確認位置與方向，避免迷路。\n\n當路線不清楚時，應該**先確認方向**再前進，而不是盲目往前走！\n\n攀爬繩在攀爬或綁住隊員時更有用，但找方向還是要靠星圖！"
+          wrongItems: ["信號鏡", "高倍率雙筒望遠鏡"],
+          howToSolve: "把星圖舉向天空。因為月球沒有大氣層產生藍天，即使在白天也能看到星星。利用星座（星星的圖案）來判斷哪個方向可以回到你的太空船。",
+          explanation: `🗺️ **正確答案：星圖！**
+
+**解決方法：** 把星圖舉向天空。因為月球沒有大氣層產生藍天，即使在白天也能看到星星。利用星座（星星的圖案）來判斷哪個方向可以回到你的太空船。
+
+**科學原理：** 月球沒有全球性的磁場，所以普通指南針毫無用處。由於星星的位置永遠不變，而且沒有雲層遮擋，它們是太空中最可靠的「路標」。
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>**無磁場**：月球沒有像地球那樣的磁場，指南針無法使用。</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>**無大氣層**：沒有空氣散射陽光，所以白天也能看到星星。</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>**恆星導航**：星星的位置固定不變，是太空中最可靠的導航工具！</span></div>`
         },
         {
           id: 4,
-          title: "🩹 隊員受傷了",
-          situation: "一名隊員在行走時跌倒，手部擦傷，影響行動。",
-          event: "隊員的手在流血，需要立即處理傷口！",
+          title: "🌀 月球「地震」",
+          image: "https://pfst.cf2.poecdn.net/base/image/28a0f297f5562b3c46cc326ba59ff3664a7d76a9d6a5a21c2e674cdb7e730805?w=1024&h=1536",
+          situation: "地面正在震動！你們要如何保持團結？",
+          event: "你腳下的地面正在震動！月球在冷卻時會收縮，導致持續很長時間的「月震」。在低重力環境下，即使是小小的震動也可能讓你失去平衡，飄離你的隊友。",
           questions: [
-            "為甚麼先照顧受傷隊員對整個小隊都很重要？",
-            "如果受傷的隊員是隊長，你會如何調整分工？",
-            "除了工具，你認為還需要甚麼才能保障安全？"
+            "如果地面在移動，為什麼綁在朋友身上比獨自站立更安全？"
           ],
-          itemQuestion: "你認為應立即使用哪一項工具？",
-          correctItem: "急救箱",
-          wrongItems: ["飲用水", "反光絲綢布"],
-          explanation: `🩹 **正確答案：急救箱！**
+          itemQuestion: "你認為應使用哪一項工具來保護團隊安全？",
+          correctItem: "攀爬繩",
+          wrongItems: ["充氣帳篷", "飲用水"],
+          howToSolve: "快速用繩子把所有五名隊員綁在一起。如果可能的話，用剩餘的繩子把自己固定在一塊大而穩定的岩石上。",
+          explanation: `🪢 **正確答案：攀爬繩！**
 
-急救箱可即時處理傷口，確保隊員安全。
+**解決方法：** 快速用繩子把所有五名隊員綁在一起。如果可能的話，用剩餘的繩子把自己固定在一塊大而穩定的岩石上。
 
-照顧受傷隊員對整個小隊都很重要，因為：
+**科���原理：** 在低重力環境下，地震期間很容易從地面「彈起」。把團隊綁在一起，你們就形成了一個更大、更重的「錨」，可以防止任何人掉進裂縫或在混亂中飄走。
 
-<div class="event-card-question"><span class="event-card-question-num">1</span><span>傷口可能惡化影響行動</span></div>
-<div class="event-card-question"><span class="event-card-question-num">2</span><span>團隊需要每個成員的力量</span></div>
-<div class="event-card-question"><span class="event-card-question-num">3</span><span>互相照顧能提升團隊士氣！</span></div>`
-        },
-        {
-          id: 5,
-          title: "📻 需要讓母船知道我們的位置",
-          situation: "你們相信已接近母船，但需要發出訊號讓對方知道你們的位置。",
-          event: "遠處似乎看到母船的影子，但對方好像不知道你們在哪裡！",
-          questions: [
-            "如果收音機突然無法使用，你還可以怎樣讓對方找到你？",
-            "為甚麼「溝通」在解難過程中十分重要？",
-            "如果只能發出一次訊號，你會傳達哪些最重要的資訊？"
-          ],
-          itemQuestion: "你認為最合適使用哪一項工具？",
-          correctItem: "太陽能收音機",
-          wrongItems: ["星圖", "太空食物包"],
-          explanation: `📻 **正確答案：太陽能收音機！**
-
-收音機可用作通訊，協助母船接收訊號並安排救援。
-
-溝通在解難過程中非常重要，因為：
-
-<div class="event-card-question"><span class="event-card-question-num">1</span><span>讓對方知道你的位置</span></div>
-<div class="event-card-question"><span class="event-card-question-num">2</span><span>可以協調救援行動</span></div>
-<div class="event-card-question"><span class="event-card-question-num">3</span><span>減少誤解和錯誤！</span></div>
-
-如果只能發一次訊號，最重要是說明**位置**和**人數**！`
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>**團隊合作**：綁在一起的團隊就像一個更大的「錨」，更難被震動。</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>**防止分散**：低重力下容易彈起，繩子可以防止隊員飄走。</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>**安全保障**：如果有人失去平衡，其他人可以拉住他！</span></div>`
         }
       ],
       en: [
         {
           id: 1,
-          title: "🧭 We're Lost!",
-          situation: "Your team needs to find the right direction to the mothership on the lunar surface, but the binoculars can only see distant landmarks.",
-          event: "You don't know which way to go - everything looks the same!",
+          title: "🏃‍♂️ The Invisible Wall",
+          image: "https://pfst.cf2.poecdn.net/base/image/6080844d122a1145b6e5d111d894e0fbdbc71a58aad396afae02f03a61cf2815?w=1024&h=1536",
+          situation: "You are sliding toward a cliff! How will you push back?",
+          event: "On the Moon, you have the same 'mass' as on Earth, but there is no air to slow you down. Even though you feel light, your body acts like a heavy truck that is very hard to stop once it starts moving.",
           questions: [
-            "If you were lost in a forest on Earth, which tool would you choose? Why?",
-            "Why might the same tool work differently in different places?",
-            "If it's too dark to see the stars clearly, how else could you help your team?"
+            "If there is no wind to blow against you, why does your body keep zooming forward?"
           ],
-          itemQuestion: "Which tool should you use to find direction?",
-          correctItem: "Star Chart",
-          wrongItems: ["High-Power Binoculars", "Magnifying Glass"],
-          explanation: "🗺️ **Correct Answer: Star Chart!**\n\nThere's no GPS on the Moon, but star positions are fixed and help with navigation.\n\nThis is why NASA ranks the Star Chart at #3! On the Moon, we need to observe star positions to find the right direction.\n\nBinoculars can see far, but can't help you determine direction!"
+          itemQuestion: "Which tool should you use to create 'thrust' to save yourself from the edge?",
+          correctItem: "CO2 Fire Extinguisher",
+          wrongItems: ["15m Climbing Rope", "Portable Heating Unit"],
+          howToSolve: "Point the nozzle of the fire extinguisher away from the cliff (in front of you) and pull the handle to spray the gas.",
+          explanation: `🧯 **Correct Answer: CO2 Fire Extinguisher!**
+
+**How to Solve:** Point the nozzle of the fire extinguisher away from the cliff (in front of you) and pull the handle to spray the gas.
+
+**The Science:** This uses Newton's Third Law. When the gas shoots forward, it "kicks" your body backward with an equal force, helping you stop or change direction in a vacuum where there is no air to push against.
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>**Reaction Force**: When you spray gas forward, the gas creates a force that pushes you backward.</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>**Overcoming Inertia**: This powerful thrust can cancel out your momentum towards the cliff and help you stop.</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>**Space Science**: In places without air, this is the only way to change your direction of movement!</span></div>`
         },
         {
           id: 2,
-          title: "😰 Teammate Feels Unwell",
-          situation: "A teammate is breathing rapidly and feeling tired. They're slowing down.",
-          event: "The teammate's face is turning pale and breathing is getting harder!",
+          title: "🕳️ The Hidden Skylight",
+          image: "https://pfst.cf2.poecdn.net/base/image/c745dcb2496017d775da77744db8d39d8af0c4c0ac664d4f7ab2a04fcd7719d7?w=1024&h=1536",
+          situation: "A giant hole leads underground. How will you enter safely?",
+          event: "You found a giant 'skylight' leading to an underground lava tunnel. It is a perfect shelter from heat and radiation, but the drop is steep and dangerous. You must get your team down without anyone getting hurt.",
           questions: [
-            "Between food, water, and oxygen - which do you need first? Rank and explain.",
-            "Why are some resources 'essential' rather than just 'nice to have'?",
-            "If oxygen is limited, how would you distribute it fairly?"
+            "Why won't a parachute help you float down like it does on Earth?"
           ],
-          itemQuestion: "What tool does the team need most right now?",
-          correctItem: "Oxygen Tanks (45 kg ea.)",
-          wrongItems: ["12kg Astronaut Food Packs", "Drinking Water (20 Liters)"],
-          explanation: "🛢️ **Correct Answer: Oxygen Tanks!**\n\nWithout oxygen, humans cannot survive on the Moon!\n\nHumans can only survive **a few minutes** without oxygen, but can survive days without food and hours without water.\n\nThat's why NASA ranks Oxygen at #1 - it's the most basic survival need!"
+          itemQuestion: "Which tool should you use to help your team enter safely?",
+          correctItem: "Shiny Silk Sheet",
+          wrongItems: ["Inflatable Shelter", "First Aid Kit"],
+          howToSolve: "Do not try to fly! Instead, use the tough fabric as a protective slide. Lay it over the sharp rocks and slide down, or use it to wrap supplies so they don't break when lowered.",
+          explanation: `✨ **Correct Answer: Shiny Silk Sheet!**
+
+**How to Solve:** Do not try to fly! Instead, use the tough fabric as a protective slide. Lay it over the sharp rocks and slide down, or use it to wrap supplies so they don't break when lowered.
+
+**The Science:** Parachutes don't work for "floating" on the Moon because there is no air to catch the fabric. However, nylon is very strong and light, making it a perfect tool to protect your suit from being torn by sharp, glass-like lunar rocks.
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>**No Air Resistance**: The Moon has no atmosphere, so parachutes cannot open to slow your descent.</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>**Material Properties**: The silk fabric is tough and durable, protecting you from sharp rocks.</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>**Creative Use**: The same tool can have different uses in different environments!</span></div>`
         },
         {
           id: 3,
-          title: "🗺️ Difficult Route",
-          situation: "The terrain ahead is rough and the path is unclear. The team worries about going the wrong way.",
-          event: "You're standing at a fork in the road, not sure which way to go!",
+          title: "🧭 The Magnet Mystery",
+          image: "https://pfst.cf2.poecdn.net/base/image/41b2e1dd71c53dd9b73581f727098584f31206d94a6247b91f1cb3b07c1898e7?w=1024&h=1536",
+          situation: "Your compass is broken! Use the stars to find home.",
+          event: "You are lost on a flat plain and your electronic GPS has failed. On Earth, you would use a magnetic compass, but on the Moon, there is no magnetic 'North Pole' to move a needle. You must find your way back to base using the sky.",
           questions: [
-            "When would the climbing rope be more useful than the star chart?",
-            "When the route is unclear, should you 'keep going' or 'confirm direction first'?",
-            "If teammates disagree, how would you help the group decide?"
+            "Why can you see stars during the daytime on the Moon but not on Earth?"
           ],
-          itemQuestion: "Which tool should you use?",
+          itemQuestion: "Which tool should you use to find direction?",
           correctItem: "Star Chart",
-          wrongItems: ["15m Climbing Rope", "First Aid Kit"],
-          explanation: "🗺️ **Correct Answer: Star Chart!**\n\nThe star chart helps confirm your position and direction, preventing you from getting lost.\n\nWhen the route is unclear, you should **confirm direction first** before moving forward!\n\nThe climbing rope is more useful for climbing or tying teammates together, but for finding direction, use the star chart!"
+          wrongItems: ["Signal Mirror", "High-Power Binoculars"],
+          howToSolve: "Hold the map up to the sky. Because there is no atmosphere to create a blue sky, the stars are visible even during the day. Use the constellations (patterns) to figure out which direction leads back to your ship.",
+          explanation: `🗺️ **Correct Answer: Star Chart!**
+
+**How to Solve:** Hold the map up to the sky. Because there is no atmosphere to create a blue sky, the stars are visible even during the day. Use the constellations (patterns) to figure out which direction leads back to your ship.
+
+**The Science:** The Moon has no global magnetic field, so a regular compass is useless. Since the stars never change position and there are no clouds to hide them, they are the most reliable "street signs" in space.
+
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>**No Magnetic Field**: The Moon doesn't have a magnetic field like Earth, so compasses don't work.</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>**No Atmosphere**: Without air to scatter sunlight, stars are visible even during the day.</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>**Stellar Navigation**: Star positions are fixed, making them the most reliable navigation tool in space!</span></div>`
         },
         {
           id: 4,
-          title: "🩹 Teammate Injured",
-          situation: "A teammate fell while walking and scraped their hand, affecting their movement.",
-          event: "The teammate's hand is bleeding and needs immediate treatment!",
+          title: "🌀 The Moon 'Quake'",
+          image: "https://pfst.cf2.poecdn.net/base/image/28a0f297f5562b3c46cc326ba59ff3664a7d76a9d6a5a21c2e674cdb7e730805?w=1024&h=1536",
+          situation: "The ground is shaking! How will you stay together?",
+          event: "The ground beneath your boots is vibrating! The Moon shrinks as it cools, causing long-lasting 'Moonquakes.' In low gravity, even a small shake can make you lose your balance and drift away from your team.",
           questions: [
-            "Why is taking care of an injured teammate important for the whole team?",
-            "If the injured teammate is the leader, how would you adjust roles?",
-            "Besides tools, what else do you need to ensure safety?"
+            "If the ground is moving, why is it safer to be tied to your friends than standing alone?"
           ],
-          itemQuestion: "Which tool should you use immediately?",
-          correctItem: "First Aid Kit",
-          wrongItems: ["Drinking Water (20 Liters)", "Shiny Silk Sheet"],
-          explanation: `🩹 **Correct Answer: First Aid Kit!**
+          itemQuestion: "Which tool should you use to keep your team safe?",
+          correctItem: "15m Climbing Rope",
+          wrongItems: ["Inflatable Shelter", "Drinking Water (20 Liters)"],
+          howToSolve: "Quickly tie all five team members together using the rope. Use the remaining length to anchor yourselves to a large, stable rock if possible.",
+          explanation: `🪢 **Correct Answer: 15m Climbing Rope!**
 
-The first aid kit can treat wounds immediately, keeping teammates safe.
+**How to Solve:** Quickly tie all five team members together using the rope. Use the remaining length to anchor yourselves to a large, stable rock if possible.
 
-Taking care of injured teammates is important for the whole team because:
+**The Science:** In low gravity, it is easy to "bounce" off the surface during a quake. By tying the team together, you create a larger, heavier "anchor" that prevents any one person from falling into a crack or drifting away in the confusion.
 
-<div class="event-card-question"><span class="event-card-question-num">1</span><span>Wounds can worsen and affect movement</span></div>
-<div class="event-card-question"><span class="event-card-question-num">2</span><span>The team needs everyone's strength</span></div>
-<div class="event-card-question"><span class="event-card-question-num">3</span><span>Caring for each other boosts team morale!</span></div>`
-        },
-        {
-          id: 5,
-          title: "📻 Need to Signal the Mothership",
-          situation: "You believe you're close to the mothership, but need to signal them your location.",
-          event: "You can see the mothership's shadow in the distance, but they don't seem to know where you are!",
-          questions: [
-            "If the radio suddenly stops working, how else could you help them find you?",
-            "Why is 'communication' so important in problem-solving?",
-            "If you can only send one signal, what's the most important information to share?"
-          ],
-          itemQuestion: "Which tool is most suitable?",
-          correctItem: "Solar-Powered Radio",
-          wrongItems: ["Star Chart", "12kg Astronaut Food Packs"],
-          explanation: `📻 **Correct Answer: Solar-Powered Radio!**
-
-The radio allows communication, helping the mothership receive signals and arrange rescue.
-
-Communication is crucial in problem-solving because:
-
-<div class="event-card-question"><span class="event-card-question-num">1</span><span>Lets others know your location</span></div>
-<div class="event-card-question"><span class="event-card-question-num">2</span><span>Coordinates rescue efforts</span></div>
-<div class="event-card-question"><span class="event-card-question-num">3</span><span>Reduces misunderstandings!</span></div>
-
-If you can only send one signal, the most important info is **location** and **number of people**!`
+<div class="event-card-question"><span class="event-card-question-num">1</span><span>**Teamwork**: A tied-together team acts like a bigger "anchor" that's harder to shake loose.</span></div>
+<div class="event-card-question"><span class="event-card-question-num">2</span><span>**Prevent Drifting**: In low gravity, you can easily bounce off - the rope keeps everyone together.</span></div>
+<div class="event-card-question"><span class="event-card-question-num">3</span><span>**Safety Net**: If someone loses balance, others can pull them back!</span></div>`
         }
       ]
     };
@@ -1428,11 +1443,23 @@ If you can only send one signal, the most important info is **location** and **n
         `;
       });
 
+      // Create image HTML if image exists
+      let imageHTML = '';
+      if (card.image) {
+        imageHTML = `
+          <div class="event-card-image">
+            <img src="${card.image}" alt="${card.title}" />
+          </div>
+        `;
+      }
+
       msg.innerHTML = `
         <div class="event-card-header">
-          <span class="event-card-badge">${t('eventCardLabel')} ${displayNum}/5</span>
+          <span class="event-card-badge">${t('eventCardLabel')} ${displayNum}/4</span>
         </div>
         <div class="event-card-title">${card.title}</div>
+
+        ${imageHTML}
 
         <div class="event-card-section situation">
           <div class="event-card-section-title">${t('situationLabel')}</div>
